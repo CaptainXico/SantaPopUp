@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>christmas forest</title>
+    <meta name="description" content="lookout for santa" />
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="treeGeneration.js"></script> <!-- Link to tree generation script -->
+    <script src="snowGeneration.js"></script> <!-- Link to snow generation script -->
+    <script src="popup.js"></script> <!-- Link to popup script -->
+    <script src="movement.js"></script> <!-- Movement script -->
+  </head>
+  <body>
+    <a-scene fog="type: linear; color: #FFFFFF; near: 1; far: 20">
+      
+      <a-assets>
+        <a-asset-item
+          id="treemodel"
+          src="https://cdn.glitch.global/2392092b-a3aa-4a16-8417-e249fd35b325/mini_christmas_tree.glb"
+        ></a-asset-item>
+        
+        <a-asset-item
+          id="snowmodel"
+          src="https://cdn.glitch.global/2392092b-a3aa-4a16-8417-e249fd35b325/snow_on_the_ground.glb"
+        ></a-asset-item>
+        
+        <a-asset-item
+          id="santa"
+          src="https://cdn.glitch.global/63dde3ab-67b5-47b0-84a0-1323af2691f2/santa_claus_statue_3d_scan.glb?v=1731250836787"
+        ></a-asset-item>
+        
+      </a-assets>
+      
+      <a-sky color="#ECECEC"></a-sky>
+
+      <!-- Snowy ground plane -->
+      <a-plane 
+        position="0 0 -10" 
+        rotation="-90 0 0" 
+        width="100" 
+        height="100" 
+        color="#FFFFFF" 
+        material="opacity: 0.9; roughness: 1"
+      ></a-plane>
+
+      <!-- Moving fog with white color -->
+      <a-box 
+        id="movingFog"
+        position="0 1 -5" 
+        depth="20" 
+        height="5" 
+        width="20" 
+        color="#FFFFFF" 
+        opacity="0.1"
+        animation="property: position; from: -10 1 -5; to: 10 1 -5; loop: true; dur: 20000; easing: linear;"
+      ></a-box>
+
+            <!-- Camera rig with controllers as children -->
+      <a-entity id="camera-rig">
+        <a-camera id="camera" position="0 1.6 0"></a-camera>
+
+        <!-- Left controller -->
+        <a-entity
+          id="left-controller"
+          laser-controls="hand: left"
+          raycaster="objects: .interactive; far: 10"
+          line="color: #00ff00; opacity: 0.8; width: 0.02;"
+          thumbstick-audio
+        ></a-entity>
+
+        <!-- Right controller -->
+        <a-entity
+          id="right-controller"
+          laser-controls="hand: right"
+          raycaster="objects: .interactive; far: 10"
+          line="color: #00ff00; opacity: 0.8; width: 0.02;"
+          thumbstick-audio
+        ></a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
+</html>
