@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set tree model attributes
     tree.setAttribute("gltf-model", "#treemodel");
     tree.setAttribute("position", `${x} 0 ${z}`);
-    tree.setAttribute("scale", "4 4 4");
+    tree.setAttribute("scale", "1 1 1");
 
     scene.appendChild(tree);
   }
