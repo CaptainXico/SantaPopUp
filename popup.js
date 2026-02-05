@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const zombieEntity = document.createElement("a-entity");
       zombieEntity.setAttribute("gltf-model", "#santa"); // Link to the zombie model
       zombieEntity.setAttribute("position", `${popupPosition.x} ${popupPosition.y} ${popupPosition.z}`);
-      zombieEntity.setAttribute("scale", "7 7 7"); // Adjust scale as needed
+      zombieEntity.setAttribute("scale", "2 2 2"); // Adjust scale as needed
 
       // Ensure the zombie always faces the camera
       zombieEntity.setAttribute(
