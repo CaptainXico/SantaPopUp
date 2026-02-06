@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Set snow model attributes
     snow.setAttribute("gltf-model", "#snowmodel");
     snow.setAttribute("position", `${x} 0 ${z}`);
-    snow.setAttribute("scale", "0.1 0.1 0.1");
+    snow.setAttribute("scale", "0.3 0.3 0.3");
 
     scene.appendChild(snow);
   }
