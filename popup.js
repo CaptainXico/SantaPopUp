@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       console.log("📍 Posição do Pai Natal:", santaPosition);
 
-      // Cria a entidade do Pai Natal
         // Cria a entidade do Pai Natal
 const santaEntity = document.createElement("a-entity");
 santaEntity.setAttribute("gltf-model", "#santa");
@@ -56,7 +55,7 @@ santaEntity.object3D.lookAt(lookAtPosition);
 
 // AGORA aplica a rotação para corrigir orientação
 // Como o lookAt já rodou o modelo, precisamos de um valor diferente
-santaEntity.object3D.rotateX(-Math.PI / 2); // -90 graus em radianos
+santaEntity.object3D.rotateX(-Math.PI / 1); // -90 graus em radianos
 
 console.log("🎅 Pai Natal: LookAt aplicado + rotação corrigida");
 
