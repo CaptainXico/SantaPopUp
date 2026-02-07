@@ -55,7 +55,7 @@ santaEntity.object3D.lookAt(lookAtPosition);
 
 // AGORA aplica a rotação para corrigir orientação
 // Como o lookAt já rodou o modelo, precisamos de um valor diferente
-santaEntity.object3D.rotateX(-Math.PI / 1); // -90 graus em radianos
+santaEntity.object3D.rotateX(-Math.PI / 0); // -90 graus em radianos
 
 console.log("🎅 Pai Natal: LookAt aplicado + rotação corrigida");
 
