@@ -35,22 +35,30 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("📍 Posição do Pai Natal:", santaPosition);
 
       // Cria a entidade do Pai Natal
-        const santaEntity = document.createElement("a-entity");
-          santaEntity.setAttribute("gltf-model", "#santa");
-          santaEntity.setAttribute("position", 
-          `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
-          santaEntity.setAttribute("rotation", "-90 0 0");
-          santaEntity.setAttribute("scale", "0.1 0.1 0.1");
-          santaEntity.setAttribute("id", "santa-popup");
+        // Cria a entidade do Pai Natal
+const santaEntity = document.createElement("a-entity");
+santaEntity.setAttribute("gltf-model", "#santa");
+santaEntity.setAttribute("position", 
+  `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
+santaEntity.setAttribute("scale", "0.1 0.1 0.1");
+santaEntity.setAttribute("id", "santa-popup");
 
-      // Roda o Pai Natal para ficar virado para a câmera (sem lookAt)
-        const angleToCamera = Math.atan2(
-          cameraWorldPosition.x - santaPosition.x,
-          cameraWorldPosition.z - santaPosition.z
-          ) * (180 / Math.PI);
+// SOLUÇÃO 1: LookAt com ajuste para modelo "deitado"
+// Primeiro faz lookAt, DEPOIS aplica a rotação para pôr de pé
+const lookAtPosition = new THREE.Vector3(
+  cameraWorldPosition.x,
+  santaHeight,
+  cameraWorldPosition.z
+);
 
-      santaEntity.setAttribute("rotation", `-90 0 ${angleToCamera}`);
-      console.log("🧭 Ângulo para câmera:", angleToCamera);
+// Aplica lookAt primeiro
+santaEntity.object3D.lookAt(lookAtPosition);
+
+// AGORA aplica a rotação para corrigir orientação
+// Como o lookAt já rodou o modelo, precisamos de um valor diferente
+santaEntity.object3D.rotateX(-Math.PI / 2); // -90 graus em radianos
+
+console.log("🎅 Pai Natal: LookAt aplicado + rotação corrigida");
 
       // Adiciona ao cenário
       scene.appendChild(santaEntity);
