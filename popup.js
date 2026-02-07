@@ -35,22 +35,22 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("📍 Posição do Pai Natal:", santaPosition);
 
       // Cria a entidade do Pai Natal
-      const santaEntity = document.createElement("a-entity");
-      santaEntity.setAttribute("gltf-model", "#santa");
-      santaEntity.setAttribute("position", 
-        `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
-      santaEntity.setAttribute("rotation", "-90 0 0");
-      santaEntity.setAttribute("scale", "0.1 0.1 0.1"); // Escala mais razoável
-      santaEntity.setAttribute("id", "santa-popup"); // ID único
+        const santaEntity = document.createElement("a-entity");
+          santaEntity.setAttribute("gltf-model", "#santa");
+          santaEntity.setAttribute("position", 
+          `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
+          santaEntity.setAttribute("rotation", "-90 0 0");
+          santaEntity.setAttribute("scale", "0.1 0.1 0.1");
+          santaEntity.setAttribute("id", "santa-popup");
 
-      // Faz o Pai Natal olhar para a câmera
-      const lookAtPosition = new THREE.Vector3(
-        cameraWorldPosition.x,
-        santaHeight, // Olhar para a altura do Pai Natal, não do chão
-        cameraWorldPosition.z
-      );
-      
-      santaEntity.object3D.lookAt(lookAtPosition);
+      // Roda o Pai Natal para ficar virado para a câmera (sem lookAt)
+        const angleToCamera = Math.atan2(
+          cameraWorldPosition.x - santaPosition.x,
+          cameraWorldPosition.z - santaPosition.z
+          ) * (180 / Math.PI);
+
+      santaEntity.setAttribute("rotation", `-90 0 ${angleToCamera}`);
+      console.log("🧭 Ângulo para câmera:", angleToCamera);
 
       // Adiciona ao cenário
       scene.appendChild(santaEntity);
