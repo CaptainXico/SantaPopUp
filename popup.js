@@ -4,48 +4,70 @@ document.addEventListener("DOMContentLoaded", function () {
     const camera = document.querySelector("[camera]");
 
     if (scene && camera) {
-      // Ensure we are working with up-to-date camera position and rotation
-      camera.object3D.updateMatrixWorld(true); // Force updates to the camera's world matrix
+      console.log("🎅 Iniciando popup do Pai Natal...");
+      
+      // Atualiza a posição da câmera
+      camera.object3D.updateMatrixWorld(true);
 
-      // Get the current world position of the camera
+      // Obtém a posição e rotação da câmera
       const cameraWorldPosition = new THREE.Vector3();
       camera.object3D.getWorldPosition(cameraWorldPosition);
-
-      // Get the current world rotation of the camera
+      
       const cameraWorldRotation = new THREE.Euler();
       cameraWorldRotation.copy(camera.object3D.rotation);
 
-      console.log("Camera World Position:", cameraWorldPosition);
-      console.log("Camera World Rotation:", cameraWorldRotation);
+      console.log("📷 Posição da Câmera:", cameraWorldPosition);
 
-      // Calculate the position in front of the camera
-      const offsetDistance = 2; // Distance in front of the camera
-      const zombieHeight = -0.1; // Adjust this value to set the zombie's height
+      // Calcula a posição NA FRENTE da câmera (corrigido)
+      const distanceInFront = 3; // 3 metros à frente
+      const santaHeight = 1.5; // Altura normal (ao nível dos olhos)
 
-      const popupPosition = {
-        x: cameraWorldPosition.x - offsetDistance * Math.sin(cameraWorldRotation.y),
-        y: zombieHeight, // Set the height specifically here
-        z: cameraWorldPosition.z - offsetDistance * Math.cos(cameraWorldRotation.y),
+      // Cálculo CORRETO para posição à frente da câmera
+      const forwardVector = new THREE.Vector3(0, 0, -1);
+      forwardVector.applyEuler(cameraWorldRotation);
+      
+      const santaPosition = {
+        x: cameraWorldPosition.x + forwardVector.x * distanceInFront,
+        y: santaHeight, // ALTURA CORRETA (não -0.1!)
+        z: cameraWorldPosition.z + forwardVector.z * distanceInFront
       };
 
-      console.log("Zombie Spawn Position:", popupPosition);
+      console.log("📍 Posição do Pai Natal:", santaPosition);
 
-      // Create the zombie entity
-      const zombieEntity = document.createElement("a-entity");
-      zombieEntity.setAttribute("gltf-model", "#santa"); // Link to the zombie model
-      zombieEntity.setAttribute("position", `${popupPosition.x} ${popupPosition.y} ${popupPosition.z}`);
-      zombieEntity.setAttribute("scale", "2 2 2"); // Adjust scale as needed
+      // Cria a entidade do Pai Natal
+      const santaEntity = document.createElement("a-entity");
+      santaEntity.setAttribute("gltf-model", "#santa");
+      santaEntity.setAttribute("position", 
+        `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
+      santaEntity.setAttribute("scale", "0.3 0.3 0.3"); // Escala mais razoável
+      santaEntity.setAttribute("id", "santa-popup"); // ID único
 
-      // Ensure the zombie always faces the camera
-      zombieEntity.setAttribute(
-        "rotation",
-        `0 ${THREE.MathUtils.radToDeg(cameraWorldRotation.y)} 0`
+      // Faz o Pai Natal olhar para a câmera
+      const lookAtPosition = new THREE.Vector3(
+        cameraWorldPosition.x,
+        santaHeight, // Olhar para a altura do Pai Natal, não do chão
+        cameraWorldPosition.z
       );
+      
+      santaEntity.object3D.lookAt(lookAtPosition);
 
-      // Append the zombie to the scene
-      scene.appendChild(zombieEntity);
+      // Adiciona ao cenário
+      scene.appendChild(santaEntity);
+      
+      console.log("✅ Pai Natal adicionado ao cenário!");
+      
+      // Adiciona uma animação suave (opcional)
+      setTimeout(() => {
+        santaEntity.setAttribute("animation", {
+          property: "position",
+          to: `${santaPosition.x} ${santaPosition.y} ${santaPosition.z - 1}`,
+          dur: 3000,
+          easing: "easeOutQuad"
+        });
+      }, 1000);
+
     } else {
-      console.error("A-Frame scene or camera not found.");
+      console.error("❌ Cena A-Frame ou câmera não encontrada.");
     }
-  }, 20000); // 20,000 milliseconds = 20 seconds
+  }, 5000); // REDUZI para 5 segundos (testa primeiro)
 });
