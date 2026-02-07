@@ -39,7 +39,7 @@ const santaEntity = document.createElement("a-entity");
 santaEntity.setAttribute("gltf-model", "#santa");
 santaEntity.setAttribute("position", 
   `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
-santaEntity.setAttribute("scale", "0.1 0.1 0.1");
+santaEntity.setAttribute("scale", "0.05 0.05 0.05");
 santaEntity.setAttribute("id", "santa-popup");
 
 // SOLUÇÃO 1: LookAt com ajuste para modelo "deitado"
