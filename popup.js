@@ -39,7 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
       santaEntity.setAttribute("gltf-model", "#santa");
       santaEntity.setAttribute("position", 
         `${santaPosition.x} ${santaPosition.y} ${santaPosition.z}`);
-      santaEntity.setAttribute("scale", "0.3 0.3 0.3"); // Escala mais razoável
+      santaEntity.setAttribute("scale", "0.1 0.1 0.1"); // Escala mais razoável
+      santaEntity.setAttribute("rotation", "-90 0 0");
       santaEntity.setAttribute("id", "santa-popup"); // ID único
 
       // Faz o Pai Natal olhar para a câmera
