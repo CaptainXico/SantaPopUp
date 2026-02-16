@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     forward.multiplyScalar(-1);
 
     // FIX 2: remove vertical tilt influence
-    forward.y = 0;
+    forward.y = 1;
     forward.normalize();
 
     const distance = 3;
