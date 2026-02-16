@@ -1,63 +1,73 @@
 document.addEventListener("DOMContentLoaded", function () {
   setTimeout(() => {
+
     const scene = document.querySelector("a-scene");
     const camera = document.querySelector("[camera]");
 
     if (!scene || !camera) {
-      console.error("❌ Cena A-Frame ou câmera não encontrada.");
+      console.error("❌ Cena ou câmera não encontrada.");
       return;
     }
 
-    console.log("🎅 Iniciando popup do Pai Natal...");
+    console.log("🎅 Criando Pai Natal...");
 
-    // Ensure world matrices are updated
+    // Update camera world matrix
     camera.object3D.updateMatrixWorld(true);
 
-    // Get camera world position
-    const cameraWorldPosition = new THREE.Vector3();
-    camera.object3D.getWorldPosition(cameraWorldPosition);
+    // Camera world position
+    const cameraPos = new THREE.Vector3();
+    camera.object3D.getWorldPosition(cameraPos);
 
-    // Get TRUE world direction
+    // Camera forward direction
     const forward = new THREE.Vector3();
     camera.object3D.getWorldDirection(forward);
 
-    // IMPORTANT: Remove vertical tilt influence
+    // FIX 1: invert direction so it's actually in FRONT
+    forward.multiplyScalar(-1);
+
+    // FIX 2: remove vertical tilt influence
     forward.y = 0;
     forward.normalize();
 
-    const distanceInFront = 3;
-    const santaHeight = 1.5;
+    const distance = 3;
+    const santaHeight = 0; // ground level (adjust if needed)
 
-    const santaX = cameraWorldPosition.x + forward.x * distanceInFront;
-    const santaZ = cameraWorldPosition.z + forward.z * distanceInFront;
+    const santaPos = new THREE.Vector3(
+      cameraPos.x + forward.x * distance,
+      santaHeight,
+      cameraPos.z + forward.z * distance
+    );
+
+    console.log("📍 Santa position:", santaPos);
 
     // Create Santa
-    const santaEntity = document.createElement("a-entity");
-    santaEntity.setAttribute("gltf-model", "#santa");
-    santaEntity.setAttribute("position", `${santaX} ${santaHeight} ${santaZ}`);
-    santaEntity.setAttribute("scale", "0.01 0.01 0.01");
-    santaEntity.setAttribute("id", "santa-popup");
+    const santa = document.createElement("a-entity");
 
-    scene.appendChild(santaEntity);
+    santa.setAttribute("gltf-model", "#santa");
+    santa.setAttribute("position", `${santaPos.x} ${santaPos.y} ${santaPos.z}`);
+    santa.setAttribute("scale", "0.01 0.01 0.01");
+    santa.setAttribute("id", "santa-popup");
 
-    // Wait until model is loaded before rotating
-    santaEntity.addEventListener("model-loaded", () => {
+    scene.appendChild(santa);
 
-      // Make Santa face camera horizontally only
-      const angle = Math.atan2(
-        cameraWorldPosition.x - santaX,
-        cameraWorldPosition.z - santaZ
-      );
+    // Wait for model load before rotating
+    santa.addEventListener("model-loaded", () => {
 
-      santaEntity.object3D.rotation.set(0, angle, 0);
+      // Make Santa face camera (horizontal only)
+      const dx = cameraPos.x - santaPos.x;
+      const dz = cameraPos.z - santaPos.z;
 
-      // If model is sideways, fix orientation here:
-      santaEntity.object3D.rotateX(-Math.PI / 2);
+      const angle = Math.atan2(dx, dz);
 
-      console.log("🎅 Pai Natal aparece corretamente!");
+      santa.object3D.rotation.set(0, angle, 0);
+
+      // FIX 3: Correct model orientation (standing upright)
+      santa.object3D.rotateX(Math.PI / 2);
+
+      console.log("✅ Santa spawned correctly!");
+
     });
 
-    console.log("✅ Pai Natal adicionado!");
-
   }, 5000);
+
 });
