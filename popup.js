@@ -63,16 +63,6 @@ console.log("🎅 Pai Natal: LookAt aplicado + rotação corrigida");
       scene.appendChild(santaEntity);
       
       console.log("✅ Pai Natal adicionado ao cenário!");
-      
-      // Adiciona uma animação suave (opcional)
-      setTimeout(() => {
-        santaEntity.setAttribute("animation", {
-          property: "position",
-          to: `${santaPosition.x} ${santaPosition.y} ${santaPosition.z - 1}`,
-          dur: 3000,
-          easing: "easeOutQuad"
-        });
-      }, 1000);
 
     } else {
       console.error("❌ Cena A-Frame ou câmera não encontrada.");
