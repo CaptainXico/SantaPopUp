@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 🔥 PROFESSIONAL FIX:
     // Fix model orientation ONCE here
-    santa.setAttribute("rotation", "-90 0 0");
+    santa.setAttribute("rotation", "0 0 0");
 
     scene.appendChild(santa);
 
