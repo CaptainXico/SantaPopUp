@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 🔥 THIS fixes belly-up problem
     // Try this first:
-    santaModel.setAttribute("rotation", "90 0 0");
+    santaModel.setAttribute("rotation", "0 0 0");
 
     santaContainer.appendChild(santaModel);
 
