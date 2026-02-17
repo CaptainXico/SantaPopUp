@@ -15,65 +15,63 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update camera world matrix
     camera.object3D.updateMatrixWorld(true);
 
-    // Get camera world position
+    // Camera world position
     const cameraPos = new THREE.Vector3();
     camera.object3D.getWorldPosition(cameraPos);
 
-    // Get forward direction
+    // Camera forward direction
     const forward = new THREE.Vector3();
     camera.object3D.getWorldDirection(forward);
 
-    // Invert so it's in FRONT of camera (A-Frame fix)
+    // Invert so it's in front
     forward.multiplyScalar(-1);
 
-    // Remove vertical tilt influence
+    // Remove vertical tilt
     forward.y = 0;
     forward.normalize();
 
-    // Distance in front of player
     const distance = 3;
 
     const santaPos = {
-
       x: cameraPos.x + forward.x * distance,
-      y: 0,   // ground level (adjust if needed)
+      y: 0,
       z: cameraPos.z + forward.z * distance
-
     };
 
     console.log("📍 Santa position:", santaPos);
 
-    // Create Santa entity
-    const santa = document.createElement("a-entity");
+    // ✅ CONTAINER (controls position and facing)
+    const santaContainer = document.createElement("a-entity");
 
-    santa.setAttribute("gltf-model", "#santa");
-
-    santa.setAttribute("position",
+    santaContainer.setAttribute("position",
       `${santaPos.x} ${santaPos.y} ${santaPos.z}`);
 
-    santa.setAttribute("scale", "0.01 0.01 0.01");
+    santaContainer.setAttribute("id", "santa-popup");
 
-    santa.setAttribute("id", "santa-popup");
+    scene.appendChild(santaContainer);
 
-    // 🔥 PROFESSIONAL FIX:
-    // Fix model orientation ONCE here
-    santa.setAttribute("rotation", "-90 0 0");
+    // ✅ MODEL (controls only model orientation)
+    const santaModel = document.createElement("a-entity");
 
-    scene.appendChild(santa);
+    santaModel.setAttribute("gltf-model", "#santa");
 
-    // After model loads, rotate only on Y axis to face camera
-    santa.addEventListener("model-loaded", () => {
+    santaModel.setAttribute("scale", "0.01 0.01 0.01");
 
-      const dx = cameraPos.x - santaPos.x;
-      const dz = cameraPos.z - santaPos.z;
+    // 🔥 THIS fixes belly-up problem
+    // Try this first:
+    santaModel.setAttribute("rotation", "90 0 0");
 
-      const angleY = Math.atan2(dx, dz) * (180 / Math.PI);
+    santaContainer.appendChild(santaModel);
 
-      
+    // Make container face camera (only Y axis)
+    const dx = cameraPos.x - santaPos.x;
+    const dz = cameraPos.z - santaPos.z;
 
-      console.log("✅ Pai Natal aparece corretamente!");
+    const angleY = Math.atan2(dx, dz) * (180 / Math.PI);
 
-    });
+    santaContainer.setAttribute("rotation", `0 ${angleY} 0`);
+
+    console.log("✅ Pai Natal aparece corretamente!");
 
   }, 5000);
 
