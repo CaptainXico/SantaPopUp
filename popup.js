@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 🔥 PROFESSIONAL FIX:
     // Fix model orientation ONCE here
-    santa.setAttribute("rotation", "0 0 0");
+    santa.setAttribute("rotation", "-90 0 0");
 
     scene.appendChild(santa);
 
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const angleY = Math.atan2(dx, dz) * (180 / Math.PI);
 
-      santa.setAttribute("rotation", `-90 ${angleY} 0`);
+      
 
       console.log("✅ Pai Natal aparece corretamente!");
 
