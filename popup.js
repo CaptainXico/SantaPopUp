@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
       santa.object3D.rotation.set(0, angle, 0);
 
       // FIX 3: Correct model orientation (standing upright)
-      santa.object3D.rotateX(Math.PI / 0);
+      santa.object3D.rotateX(-Math.PI / 2);
 
       console.log("✅ Santa spawned correctly!");
 
