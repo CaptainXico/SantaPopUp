@@ -6,12 +6,14 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="treeGeneration.js"></script> <!-- Link to tree generation script -->
     <script src="snowGeneration.js"></script> <!-- Link to snow generation script -->
+    <script src="audio-unlock.js"></script>
     <script src="popup.js"></script> <!-- Link to popup script -->
     <script src="movement.js"></script> <!-- link to Movement script -->
     <script src="santamove.js"></script> <!-- link to Santa movement animation -->
   </head>
   <body>
     <a-scene fog="type: linear; color: #FFFFFF; near: 1; far: 20">
+      <audio id="ambient-sound" src="christmas.mp3" preload="auto"></audio>
       
       <a-assets>
         <a-asset-item
