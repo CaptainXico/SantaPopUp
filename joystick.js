@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const cameraRig = getCameraRig();
         if (!cameraRig) return;
 
-        const speed = 0.1;
+        const speed = 0.05;
         let moveX = 0;
         let moveZ = 0;
 
